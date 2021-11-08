@@ -1,0 +1,20 @@
+version: '3'
+services: 
+  web:
+    stdin_open: true
+    build:
+      context: . # context is referring to the folder to find the custom Dockerfile
+      dockerfile: Dockerfile.dev # get the name of the file
+    ports: 
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
